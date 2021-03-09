@@ -1,0 +1,13 @@
+#Eclipse IDE
+.settings/
+target/
+.classpath
+.project
+
+#Intellij Idea
+.idea/
+*.iml
+
+#Annotation Processing Because of Lombok
+.apt_generated/
+.apt_generated_tests/
