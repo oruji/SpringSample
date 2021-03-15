@@ -12,6 +12,8 @@ import repository.PublisherRepository;
 public class BootStrapData {
     public static void main(String[] args) {
 
+        System.out.println("Started in Bootstrap");
+
         ApplicationContext ctx = new GenericXmlApplicationContext("bean.xml");
 
         AuthorRepository authorRepository = (AuthorRepository) ctx.getBean("authorRepository");
@@ -28,22 +30,31 @@ public class BootStrapData {
         System.out.println("Publisher Count: " + publisherRepository.count());
 
         Author eric = new Author("Eric", "Evans");
-        Book ddd = new Book("Domain Driven Design", "123123");
-        eric.getBooks().add(ddd);
-        ddd.getAuthors().add(eric);
+        Book book1 = new Book("Domain Driven Design", "123123");
+        eric.getBooks().add(book1);
+        book1.getAuthors().add(eric);
+
+        book1.setPublisher(publisher);
+        publisher.getBooks().add(book1);
 
         authorRepository.save(eric);
-        bookRepository.save(ddd);
+        bookRepository.save(book1);
+        publisherRepository.save(publisher);
 
         Author rod = new Author("Rod", "Johnson");
-        Book noEJB = new Book("J2EE Development without EJB", "3939459459");
-        rod.getBooks().add(noEJB);
-        noEJB.getAuthors().add(rod);
+        Book book2 = new Book("J2EE Development without EJB", "3939459459");
+        rod.getBooks().add(book2);
+        book2.getAuthors().add(rod);
+
+        book2.setPublisher(publisher);
+        publisher.getBooks().add(book2);
 
         authorRepository.save(rod);
-        bookRepository.save(noEJB);
+        bookRepository.save(book2);
+        publisherRepository.save(publisher);
 
         System.out.println("Started in Bootstrap");
         System.out.println("Number of Books: " + bookRepository.count());
+        System.out.println("Publisher Number of Books: " + publisher.getBooks().size());
     }
 }
