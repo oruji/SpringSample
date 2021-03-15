@@ -3,22 +3,27 @@ package bootstrap;
 import domain.Author;
 import domain.Book;
 import domain.Publisher;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import repository.AuthorRepository;
 import repository.BookRepository;
 import repository.PublisherRepository;
 
-public class BootStrapData {
-    public static void main(String[] args) {
+public class BootStrapData implements ApplicationListener<ContextRefreshedEvent> {
 
+    private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
+
+    public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
+        this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
+    }
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
         System.out.println("Started in Bootstrap");
-
-        ApplicationContext ctx = new GenericXmlApplicationContext("bean.xml");
-
-        AuthorRepository authorRepository = (AuthorRepository) ctx.getBean("authorRepository");
-        BookRepository bookRepository = (BookRepository) ctx.getBean("bookRepository");
-        PublisherRepository publisherRepository = (PublisherRepository) ctx.getBean("publisherRepository");
 
         Publisher publisher = new Publisher();
         publisher.setName("SFG Publishing");

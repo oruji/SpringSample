@@ -76,5 +76,17 @@
     <bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
         <property name="templateEngine" ref="templateEngine"/>
     </bean>
+
+    <bean id="bootStrapData" class="bootstrap.BootStrapData">
+        <constructor-arg>
+            <ref bean="authorRepository"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="bookRepository"/>
+        </constructor-arg>
+        <constructor-arg>
+            <ref bean="publisherRepository"/>
+        </constructor-arg>
+    </bean>
 </beans>
   
