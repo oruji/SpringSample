@@ -2,10 +2,12 @@ package bootstrap;
 
 import domain.Author;
 import domain.Book;
+import domain.Publisher;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import repository.AuthorRepository;
 import repository.BookRepository;
+import repository.PublisherRepository;
 
 public class BootStrapData {
     public static void main(String[] args) {
@@ -14,6 +16,16 @@ public class BootStrapData {
 
         AuthorRepository authorRepository = (AuthorRepository) ctx.getBean("authorRepository");
         BookRepository bookRepository = (BookRepository) ctx.getBean("bookRepository");
+        PublisherRepository publisherRepository = (PublisherRepository) ctx.getBean("publisherRepository");
+
+        Publisher publisher = new Publisher();
+        publisher.setName("SFG Publishing");
+        publisher.setCity("St Petersburg");
+        publisher.setState("FL");
+
+        publisherRepository.save(publisher);
+
+        System.out.println("Publisher Count: " + publisherRepository.count());
 
         Author eric = new Author("Eric", "Evans");
         Book ddd = new Book("Domain Driven Design", "123123");
